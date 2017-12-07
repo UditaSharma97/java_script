@@ -4,30 +4,30 @@ var addPro = document.getElementById("addPro");
 var addProPanel = document.getElementById("addProPanel");
 var proList =document.getElementById("proList");
 var proTable =document.getElementById("proTable");
-proArr=getStoredProducts();
-showArr(proArr);
+proArr=getStoredProducts();			//set up the pro array from local
+showArr(proArr);					//display the products of pro array in table
 function showArr(proArr)
 {
 	for(i=0;i<proArr.length;i++)
 	{		
-			var objPro= new Object();
+		var objPro= new Object();
 		objPro.Id=proArr[i].Id;
 		objPro.Name=proArr[i].Name;
 		objPro.Desp=proArr[i].Desp;
 		objPro.Price=proArr[i].Price;
 		objPro.Quantity=proArr[i].Quantity;
-			createListOfProducts(objPro)
+		createListOfProducts(objPro)
 		proID=objPro.Id;
 	}
 proID++;
 }
 
-function storeProducts(products)
+function storeProducts(products)		//store the pro array in local storage+
 {
 localStorage.products = JSON.stringify(products);
 }
 
-function getStoredProducts()
+function getStoredProducts()			//retrieve products into pro array from local storage
 {
 	if (!localStorage.products)
 	{
@@ -37,9 +37,8 @@ function getStoredProducts()
 	return JSON.parse(localStorage.products);
 }
 
-
-addPro.addEventListener("click",function(event)
-			{	createNewPro();	}
+addPro.addEventListener("click",function(event)			//links the add pro button in dom with the function create new product
+		{	createNewPro();	}
 		);
 
 function hideAddPro()
@@ -52,7 +51,6 @@ function showAddPro()
 	addPro.setAttribute("style","visibility:visible");
 }
 
-
 function insertLine(target)
 {
 	var br=document.createElement("br");
@@ -61,7 +59,6 @@ function insertLine(target)
 
 function updateProTableAfterEDIT(index)
 {
-	
 	var tr=document.getElementById(proArr[index].Id);
 	var tdID =tr.cells[0];
 	tdID.innerHTML=proArr[index].Id;
@@ -76,7 +73,7 @@ function updateProTableAfterEDIT(index)
 		
 }
 
-function createListOfProducts(objPro)
+function createListOfProducts(objPro)					// making table of products in dom (appending new product)
 {
 	var tr=document.createElement("tr");
 	tr.setAttribute("id",objPro.Id);
@@ -128,7 +125,7 @@ function createListOfProducts(objPro)
 	
 }
 
-function editInProArr(index)
+function editInProArr(index)				// edit a product in dom and local storage
 {	
 
 //console.log(proArr);
@@ -137,19 +134,20 @@ function editInProArr(index)
 	proArr[index].Price=document.getElementById("ipPrice").value;
 	proArr[index].Quantity=document.getElementById("ipQuantity").value;
 console.log(proArr);
-	localStorage.products = JSON.stringify([]);
-	storeProducts(proArr);
+	localStorage.products = JSON.stringify([]);					// clear local storage
+	storeProducts(proArr);										// stroe edited product list at local storage
 	
-	deleteProPanel();
+	deleteProPanel();										// removing details of product form field from dom
 	showAddPro();
 	
 }
 
-function editInDom(selectedProductIndex)
+function editInDom(selectedProductIndex)			// creating product detail form of selected product and saving any changes made
 {
 	insertLine(addProPanel);
 	insertLine(addProPanel);
 	console.log(selectedProductIndex);
+	
 	var name=document.createElement("label");
 	name.innerHTML="NAME : ";
 	var ipProName=document.createElement("input");
@@ -211,14 +209,17 @@ function delFromProArr(selectedProductIndex)
 {
 	console.log(selectedProductIndex);
 	console.log(proArr);
-	proArr.splice(selectedProductIndex,1);
+	
+	proArr.splice(selectedProductIndex,1);			//removing selected producgt from the pro array
+	
 	console.log(proArr);
-	localStorage.products = JSON.stringify([]);
-	storeProducts(proArr);
+	
+	localStorage.products = JSON.stringify([]);			//clear local storage
+	storeProducts(proArr);								//saving new pro array
 }
 
 
-function getProInedx(id)
+function getProInedx(id)					//returns the id of the selected product
 {
 	    for (var i = 0; i < proArr.length; i++) 
 	{
@@ -227,7 +228,7 @@ function getProInedx(id)
 	}
 }
 
-function deleteProPanel()
+function deleteProPanel()					//removes the details of product form from dom
 {
 
 	   var childNodes = addProPanel.childNodes;
@@ -239,7 +240,7 @@ function deleteProPanel()
 }
 
 
-function addToProArr()
+function addToProArr()						//adding into product array from dom
 {
 	var objPro= new Object();
 	objPro.Id=proID;
@@ -251,17 +252,16 @@ function addToProArr()
 	proArr.push(objPro);
 	createListOfProducts(objPro);								// create list in dom
 	
-	localStorage.products = JSON.stringify([]);
-	storeProducts(proArr);
+	localStorage.products = JSON.stringify([]);					// clear local storage
+	storeProducts(proArr);										// store pro array into local storage
 	
 	deleteProPanel();
 	showAddPro();
 
 	proID++;
-	
 }
 
-function createProPanel()
+function createProPanel()				// creating form to fill details of product
 {
 	insertLine(addProPanel);
 	insertLine(addProPanel);
