@@ -17,9 +17,9 @@ function showArr(proArr)
 		objPro.Price=proArr[i].Price;
 		objPro.Quantity=proArr[i].Quantity;
 		createListOfProducts(objPro)
-		proID=objPro.Id;
+		proID=objPro.Id+1;
 	}
-proID++;
+//proID++;
 }
 
 function storeProducts(products)		//store the pro array in local storage+
@@ -100,7 +100,7 @@ function createListOfProducts(objPro)					// making table of products in dom (ap
 	tdEdit.addEventListener("click",function(event)
 					{
 						var targetParent=event.target.parentNode.parentNode;
-						var proIndex= getProInedx(parseInt(targetParent.id));					//	returns the index of the obj in proArr
+						var proIndex= getProIndex(parseInt(targetParent.id));					//	returns the index of the obj in proArr
 						editInDom(proIndex);													//	creates a panel havinh the selected row's values filled
 					}
 		);
@@ -114,7 +114,7 @@ function createListOfProducts(objPro)					// making table of products in dom (ap
 	tdDel.addEventListener("click",function(event)
 					{
 						var targetParent=event.target.parentNode.parentNode;
-						var proIndex= getProInedx(parseInt(targetParent.id));
+						var proIndex= getProIndex(parseInt(targetParent.id));
 						delFromProArr(proIndex);
 						targetParent.parentNode.removeChild(targetParent);
 					}
@@ -219,7 +219,7 @@ function delFromProArr(selectedProductIndex)
 }
 
 
-function getProInedx(id)					//returns the id of the selected product
+function getProIndex(id)					//returns the id of the selected product
 {
 	    for (var i = 0; i < proArr.length; i++) 
 	{
